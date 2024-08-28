@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: show info
         run: whereis docker
+
+      - name: show current directory
+        run: pwd
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2.2.0
         with:
