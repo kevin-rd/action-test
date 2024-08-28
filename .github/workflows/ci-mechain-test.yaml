@@ -1,0 +1,14 @@
+name: Build and Deploy Mechain
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: show info
+        run: echo ${{secrets.DOCKER_REPOSITORY}}
+
