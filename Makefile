@@ -1,14 +1,14 @@
 #!/usr/bin/make -f
 
-REPOSITORY := $(DOCKER_REPOSITORY)
+REPOSITORY := $(secrets.DOCKER_REPOSITORY)
 
 
 default_target: all
 
 .PHONY: default_target
 
-build-docker:
+build:
 	echo ${REPOSITORY}
 
 
-all: build-docker
+all: build

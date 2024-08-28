@@ -6,9 +6,9 @@ on:
       - 'main'
 
 jobs:
-  build-demo:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: show info
-        run: echo ${{secrets.DOCKER_REPOSITORY}}
+        run: make build
 
