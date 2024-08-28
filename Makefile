@@ -13,6 +13,8 @@ build:
 	docker build -t mechain-test:${DOCKER_TAG} .
 	docker images
 	docker tag mechain-test:${DOCKER_TAG} kevin2025/mechain-test:${DOCKER_TAG}
+
+docker-push:
 	docker push kevin2025/mechain-test:${DOCKER_TAG}
 
 all: build

@@ -29,3 +29,5 @@ jobs:
           logout: false
         # run: docker login ${{secrets.DOCKER_REPOSITORY}} -u ${{secrets.DOCKER_USERNAME}} -p "{{secrets.DOCKER_PASSWORD}}"
 
+      - name: Push to Docker Hub
+        run: make docker-push
