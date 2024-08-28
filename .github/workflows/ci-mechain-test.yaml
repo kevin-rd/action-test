@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: show info
         run: whereis docker
-      - name: login to docker hub
-        run: docker login ${{secrets.DOCKER_REPOSITORY}} -u ${{secrets.DOCKER_USERNAME}} -p "{{secrets.DOCKER_PASSWORD}}"
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          logout: false
+        # run: docker login ${{secrets.DOCKER_REPOSITORY}} -u ${{secrets.DOCKER_USERNAME}} -p "{{secrets.DOCKER_PASSWORD}}"
 
