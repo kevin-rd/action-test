@@ -4,6 +4,7 @@ WORKDIR /go/src/github.com/zkmelabs
 
 COPY . .
 
+RUN env
 RUN echo "compile completed"
 
 FROM golang:1.22.4-bullseye
