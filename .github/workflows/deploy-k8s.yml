@@ -26,9 +26,9 @@ jobs:
         id: meta
         run: |
           if ${{ inputs.publish_tag }}; then
-            echo "version=${{ inputs.publish_tag }} (commitId=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
+            echo "version=${{ inputs.publish_tag }} (commit=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
           else
-            echo "version=$(git describe --always --tags --match='v*') (commitId=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
+            echo "version=$(git describe --always --tags --match='v*') (commit=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
           fi
 
       - name: "Notify begin message to Lark"

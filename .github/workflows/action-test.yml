@@ -1,0 +1,14 @@
+name: "Example Workflow Using Reusable Action"
+on: [push]
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Use My Custom Action
+        uses: kevin-rd/lark-notify@main
+        with:
+          name: "Alice"
