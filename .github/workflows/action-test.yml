@@ -9,10 +9,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Use My Custom Action
-        uses: kevin-rd/lark-notify@v1.4
+        uses: kevin-rd/lark-notify@v1.5
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
           header_template: 'yellow'
           header_content: 'Greetings from the Lark Notify Action'
-          env_tag: 'devint'
+          message_env_tag: 'devint'
+          message_version: 'v1.0.0'
