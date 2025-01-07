@@ -9,6 +9,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Use My Custom Action
-        uses: kevin-rd/lark-notify@v1
+        uses: kevin-rd/lark-notify@v1.1
         with:
           name: "Alice"
