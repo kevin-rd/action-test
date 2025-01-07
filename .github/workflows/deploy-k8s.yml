@@ -1,39 +1,37 @@
-name: Build and Deploy Mechain
+name: Deploy to Kubernetes
 
 on:
-  push:
-    branches:
-      - 'main'
+  workflow_call:
+    inputs:
+      namespace_k8s:
+        description: deploy environment tag, example. mechain-dev/mechain-test
+        required: true
+        type: string
+      release_name:
+        description: Deployment name in kubernetes.
+        required: true
+        type: string
+      publish_tag:
+        description: The tag of the image, example. develop,test,None.
+        required: false
+        type: string
 
 jobs:
-  publish_image:
-    name: Publish Docker image
-    if: false
-    uses: './.github/workflows/docker-publish.yaml'
-    secrets: inherit
-    with:
-      tags: kevin2025/action-test:develop
-
-  notify_lark:
+  deploy_to_k8s:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get Github tag
+      - name: Get Github version info
         id: meta
         run: |
-          echo "version=develop(commit=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
-
-      - name: Get Github changed files
-        id: changed_files
-        run: |
-          if ${{ github.event_name == 'pull_request' }}; then
-            echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD | xargs)" >> $GITHUB_OUTPUT
+          if ${{ inputs.publish_tag }}; then
+            echo "version=${{ inputs.publish_tag }} (commitId=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
           else
-            echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs)" >> $GITHUB_OUTPUT
+            echo "version=$(git describe --always --tags --match='v*') (commitId=`echo ${GITHUB_SHA} | cut -c1-8`)" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Notify to Lark
+      - name: "Notify begin message to Lark"
         uses: actions/github-script@v7
         with:
           script: |
@@ -45,7 +43,7 @@ jobs:
           CARD_BODY: |-
             {
               "header": {
-                "template": "blue",
+                "template": "orange",
                 "title": {
                   "content": "【CICD】${{ github.repository }} 部署通知",
                   "tag": "plain_text"
@@ -97,18 +95,6 @@ jobs:
                       "is_short": true,
                       "text": {
                         "content": "**Action URL** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                        "tag": "lark_md"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "tag": "div",
-                  "fields": [
-                    {
-                      "is_short": true,
-                      "text": {
-                        "content": "**修改内容**\n ${{ steps.changed_files.outputs.changed_files }}",
                         "tag": "lark_md"
                       }
                     }
