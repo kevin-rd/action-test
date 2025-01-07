@@ -43,7 +43,7 @@ jobs:
           CARD_BODY: |-
             {
               "header": {
-                "template": "orange",
+                "template": "green",
                 "title": {
                   "content": "【CICD】${{ github.repository }} 部署通知",
                   "tag": "plain_text"
@@ -59,7 +59,12 @@ jobs:
                         "content": "**代码库** ${{ github.repository }}",
                         "tag": "lark_md"
                       }
-                    },
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "fields": [
                     {
                       "is_short": true,
                       "text": {
@@ -78,7 +83,12 @@ jobs:
                         "content": "**版本** ${{ steps.meta.outputs.version }}",
                         "tag": "lark_md"
                       }
-                    },
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "fields": [
                     {
                       "is_short": true,
                       "text": {
