@@ -23,8 +23,15 @@ jobs:
     - name: Git fetch everything
       run: git fetch --prune --unshallow
 
+    - uses: technote-space/get-diff-action@v6.1.2
+      id: git_diff
+      with:
+        PATTERNS: |
+          **/**
+
     - name: Get Github tag
       id: meta
+      if: env.GIT_DIFF
       run: |
         if ${{ inputs.publish_tag }}; then
           echo "tags=${{ inputs.tags }}, kevin2025/action-test:$(git describe --always --tags --match='v*')" >> "$GITHUB_OUTPUT"

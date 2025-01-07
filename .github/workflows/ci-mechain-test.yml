@@ -9,14 +9,14 @@ jobs:
   publish_image:
     name: Publish Docker image
     if: false
-    uses: '.github/workflows/docker-publish.yml'
+    uses: './.github/workflows/docker-publish.yml'
     secrets: inherit
     with:
       tags: kevin2025/action-test:develop
 
   deploy_with_k8s:
     name: Deploy with k8s
-    uses: '.github/workflows/deploy-k8s.yml'
+    uses: './.github/workflows/deploy-k8s.yml'
     secrets: inherit
     with:
       namespace_k8s: mechain-dev
