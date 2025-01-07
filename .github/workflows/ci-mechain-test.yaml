@@ -8,7 +8,95 @@ on:
 jobs:
   publish_image:
     name: Publish Docker image
+    if: false
     uses: './.github/workflows/docker-publish.yaml'
     secrets: inherit
     with:
       tags: kevin2025/action-test:develop
+
+  notify_lark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Github tag
+        id: meta
+        run: |
+          echo "version=develop(commit=1234567)" >> "$GITHUB_OUTPUT"
+
+      - name: Get Github changed files
+        id: changed_files
+        run: |
+          echo "changed_files=$(git diff --name-only origin/main...HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Notify to Lark
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const script = require('./.github/workflows/scripts/lark.js')
+            await script({github, context, core})
+        env:
+          LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
+          # Build Lark Card on https://open.feishu.cn/tool/cardbuilder
+          CARD_BODY: |-
+            {
+              "header": {
+                "template": "blue",
+                "title": {
+                  "content": "【CICD】${{ github.repository }} 服务部署通知",
+                  "tag": "plain_text"
+                }
+              },
+              "elements": [
+                {
+                  "tag": "div",
+                  "fields": [
+                    {
+                      "is_short": true,
+                      "text": {
+                        "content": "**代码库** ${{ github.repository }}",
+                        "tag": "lark_md"
+                      }
+                    },
+                    {
+                      "is_short": true,
+                      "text": {
+                        "content": "**环境** devint",
+                        "tag": "lark_md"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "fields": [
+                    {
+                      "is_short": true,
+                      "text": {
+                        "content": "**版本** ${{ steps.meta.outputs.version }}",
+                        "tag": "lark_md"
+                      }
+                    },
+                    {
+                      "is_short": true,
+                      "text": {
+                        "content": "**操作人** ${{ github.actor }}",
+                        "tag": "lark_md"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "fields": [
+                    {
+                      "is_short": true,
+                      "text": {
+                        "content": "**修改内容**\n ${{ steps.changed_files.outputs.changed_files }}",
+                        "tag": "lark_md"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
