@@ -1,0 +1,12 @@
+name: "Lark Notion Action"
+description: "A Lark Robot Notion action"
+inputs:
+  username:
+    description: "The username to greet"
+    required: true
+outputs:
+  greeting:
+    description: "The generated greeting message"
+runs:
+  using: "node16"
+  main: "index.js"
