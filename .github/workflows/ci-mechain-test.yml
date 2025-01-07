@@ -6,19 +6,9 @@ on:
       - 'main'
 
 jobs:
-  diff_test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: technote-space/get-diff-action@v6.1.2
-        id: git_diff
-        with:
-          PATTERNS: |
-            Dockerfile
-            README.md
-
   publish_image:
     name: Publish Docker image
-    if: env.GIT_DIFF
+    if: false
     uses: './.github/workflows/docker-publish.yml'
     secrets: inherit
     with:
