@@ -51,30 +51,35 @@ jobs:
               },
               "elements": [
                 {
+                  "tag": "div",
                   "text": {
                     "content": "**代码库** ${{ github.repository }}",
                     "tag": "lark_md"
                   }
                 },
                 {
+                  "tag": "div",
                   "text": {
                     "content": "**环境** devint",
                     "tag": "lark_md"
                   }
                 },
                 {
+                  "tag": "div",
                   "text": {
                     "content": "**版本** ${{ steps.meta.outputs.version }}",
                     "tag": "lark_md"
                   }
                 },
                 {
+                  "tag": "div",
                   "text": {
                     "content": "**操作人** ${{ github.actor }}",
                     "tag": "lark_md"
                   }
                 },
                 {
+                  "tag": "div",
                   "text": {
                     "content": "**Action URL** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                     "tag": "lark_md"
