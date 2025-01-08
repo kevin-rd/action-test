@@ -1,5 +1,9 @@
 name: "Example Workflow Using Reusable Action"
-on: [push]
+
+on:
+  push:
+    branches:
+      - main-test
 
 jobs:
   greet:
@@ -14,6 +18,6 @@ jobs:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
           header_template: 'yellow'
-          header_content: 'Greetings from the Lark Notify Action'
+          header_content: 'Lark Notify Test for kevin'
           message_env_tag: 'devint'
           message_version: 'v1.0.0'

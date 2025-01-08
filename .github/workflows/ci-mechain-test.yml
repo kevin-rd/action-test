@@ -3,7 +3,7 @@ name: Build and Deploy Mechain
 on:
   push:
     branches:
-      - main-test
+      - main
 
 jobs:
   publish_image:
