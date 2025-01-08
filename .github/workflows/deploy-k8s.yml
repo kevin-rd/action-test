@@ -40,16 +40,16 @@ jobs:
           echo "COMMIT_LOGS<<EOF" >> $GITHUB_ENV
           echo "$commit_logs" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-
+        continue-on-error: true
 
       - name: Lark Notification
         uses: kevin-rd/lark-notify@main
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
-          header_template: 'yellow'
-          header_content: 'Lark Notify Test for Kevin'
-          message_env_tag: 'devint'
+          header_template: "yellow"
+          header_content: "Lark Notify Test for Kevin"
+          message_env_tag: "devint"
           message_version: "${{ steps.meta.outputs.version }}"
           message_commit_logs: "${{ env.COMMIT_LOGS }}"
 
