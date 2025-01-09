@@ -3,21 +3,12 @@ name: "Example Workflow Using Reusable Action"
 on:
   push:
     branches:
-      - main-test
+      - main
 
 jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
       - name: Use My Custom Action
-        uses: kevin-rd/lark-notify@v1.5
-        env:
-          LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
-        with:
-          header_template: 'yellow'
-          header_content: 'Lark Notify Test for kevin'
-          message_env_tag: 'devint'
-          message_version: 'v1.0.0'
+        run: |
+          echo "url: ${{ github.event.repository.html_url }}"

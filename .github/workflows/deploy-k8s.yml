@@ -43,7 +43,7 @@ jobs:
         continue-on-error: true
 
       - name: Lark Notification
-        uses: kevin-rd/lark-notify@main
+        uses: kevin-rd/lark-notify@v1.8
         env:
           LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
         with:
